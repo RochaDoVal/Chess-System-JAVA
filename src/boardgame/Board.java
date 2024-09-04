@@ -32,7 +32,7 @@ public class Board {
 	}
 	
 	public Piece piece (Position position) {
-		//programação defensiva --- se a posição existe
+		//programação defensiva -- se a posição existe
 		if(!positionExists(position)) {
 			throw new BoardException("POsition not on the board");
 		}
