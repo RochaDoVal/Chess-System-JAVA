@@ -48,9 +48,25 @@ public class Board {
 		}
 		pieces[position.getRow()][position.getColumn()] = piece;
 		piece.position = position;
-		
-		
 	}
+	
+	public Piece removePiece(Position position) {
+		//verifica se a posição exite
+		if(!positionExists(position)) {
+			throw new BoardException("Position not on the board");
+		}
+		//siginifica que nao tem peça na posição
+		if (piece(position) == null) {
+			return null;
+		}
+		//retirando a peça do tabuleiro.
+		Piece aux = piece(position);
+		aux.position = null;
+		//acessar a matriz de peças, e dizer que a posição esta nula, indicando que nao tem peça ali.
+		pieces[position.getRow()][position.getColumn()] = null;
+		return aux;
+	}
+	
 	//fica mais facil testar pela linha e pela coluna...
 	// a linha tem que ser maior que 0 && menor que a altura do taabuleiro
 	// mesma coisa pra coluna

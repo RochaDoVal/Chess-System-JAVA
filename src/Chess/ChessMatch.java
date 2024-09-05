@@ -3,6 +3,8 @@ package Chess;
 import Chess.pieces.King;
 import Chess.pieces.Rook;
 import boardgame.Board;
+import boardgame.Piece;
+import boardgame.Position;
 
 
 public class ChessMatch {
@@ -28,12 +30,42 @@ public class ChessMatch {
 		return mat;
 	}
 	
+	//Priemiro converte para posição da Matriz
+	//Apos isso tem que validar se tinha um peça onde foi selecionado
+	//makeMove, responsavel pela movimentaçao da peça
+	//Depois retorna a peça capiturada e fazer DownCast para (ChessPiece), pq a peça capturada é do tipo Piece.
+	public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
+		Position source = sourcePosition.toPosition();
+		Position target = targetPosition.toPosition();
+		validateSourcePosition(source);
+		Piece capturedPiece = makeMove(source, target);
+		return (ChessPiece)capturedPiece;
+	}
+	
+	//Testa se tem um peça na posição de origem
+	private void validateSourcePosition(Position position) {
+		if(!board.thereIsAPiece(position)) {
+			throw new ChessException("There is no piece on source position");
+		}
+	}
+	
+	//vai retirar a peça da posiçao de origem e remover a possivel peça que esta na posiçao de destino
+	//e depois coloca a peça a peça onde foi capturada. (Se tiver uma peça la, caso nao so coloca mesmo.)
+	private Piece makeMove(Position source, Position target) {
+		Piece p = board.removePiece(source);	
+		Piece capturedPiece = board.removePiece(target);
+		board.placePiece(p, target);
+		return capturedPiece;
+		}
+	
+	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 	}
 	
 	
 	//Aqui é o setup padrão das peças do Xadrez
+	//abra a pasta BIN e abra o terminal git, e digite -> java application/Program
 	private void initialSetup() {
 		placeNewPiece('c', 1, new Rook(board, Color.WHITE));
         placeNewPiece('c', 2, new Rook(board, Color.WHITE));
