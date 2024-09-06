@@ -31,6 +31,15 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	
+	
+	// https://stackoverflow.com/
+	//limpar a tela, quando fizer uma jogada... nao ficar poluido
+	public static void clearScream() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+	
+	
 	// na String vc vai escrever por exemplo (a1)
 	// column vai pegar somente a primeira letra por isso o (s.charAt(0))
 	// a Row/Linha vai pegar a segunda letra/numero por isso o (Integer.parseInt(s.substring(1))
