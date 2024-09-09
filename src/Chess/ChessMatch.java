@@ -47,6 +47,10 @@ public class ChessMatch {
 		if(!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		//se nao tiver nem um movimento possivel...
+		if(!board.piece(position).isThereAnyPossibleMove()) {
+			throw new ChessException("There is no possible moves for the chosen piece");
+		}
 	}
 	
 	//vai retirar a peça da posiçao de origem e remover a possivel peça que esta na posiçao de destino
