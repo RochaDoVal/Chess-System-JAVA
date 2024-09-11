@@ -23,6 +23,7 @@ public abstract class Piece {
 		return possibleMoves()[position.getRow()][position.getColumn()];
 	}
 	
+	//Virificar se tem alguma posição possivel para a peçaa se mover em toda a matriz
 	public boolean isThereAnyPossibleMove() {
 		boolean[][] mat = possibleMoves();
 		for( int i = 0; i< mat.length; i++){
