@@ -30,6 +30,16 @@ public class ChessMatch {
 		return mat;
 	}
 	
+	//converte a posição de xadrez para posição de xadrez normal
+	//depois validar a posição
+	//por ultimo returnar os movimento possiveis.
+	public boolean[][] possibleMoves(ChessPosition sourcePosition){
+		Position position = sourcePosition.toPosition();
+		validateSourcePosition(position);
+		return board.piece(position).possibleMoves();
+		
+	}
+	
 	//Priemiro converte para posição da Matriz
 	//Apos isso tem que validar se tinha um peça onde foi selecionado
 	//makeMove, responsavel pela movimentaçao da peça
