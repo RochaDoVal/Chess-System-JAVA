@@ -26,7 +26,6 @@ public class Program {
 				boolean [][] possibleMoves = chessMatch.possibleMoves(source);
 				UI.clearScream();
 				UI.printBoard(chessMatch.getPieces(), possibleMoves);
-				
 				System.out.println();
 				System.out.println("Target: ");
 				ChessPosition target = UI.readChessPosition(sc);
