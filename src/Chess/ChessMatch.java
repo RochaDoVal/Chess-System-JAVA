@@ -9,15 +9,28 @@ import boardgame.Position;
 
 public class ChessMatch {
 	
+	private int turn;
+	private Color currentPlay;
 	private Board board;
 	
 	//Tamnaho do tabuleiro
 	//E setup das peças
 	public ChessMatch() {
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlay = Color.WHITE;
 		initialSetup();
 	}
 	
+	public int getTurn() {
+		return turn;
+	}
+
+	public Color getCurrentPlay() {
+		return currentPlay;
+	}
+
+
 	//retornar uma matriz de peças de xadrez
 	public ChessPiece[][] getPieces(){
 		ChessPiece[][] mat = new ChessPiece[board.getRows()][board.getColumns()];
@@ -50,6 +63,7 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
+		nextTurn();
 		return (ChessPiece)capturedPiece;
 	}
 	
@@ -58,6 +72,12 @@ public class ChessMatch {
 		if(!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		
+		//se a cor for diferente da cor atual, significa que a peça nao é dele.
+		if(currentPlay != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");
+		}
+		
 		//se nao tiver nem um movimento possivel...
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no possible moves for the chosen piece");
@@ -70,6 +90,12 @@ public class ChessMatch {
 			throw new ChessException("The chosen can't move to target position");
 		}
 	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlay = (currentPlay == Color.WHITE) ? Color.BLACK : Color.WHITE;
+	}
+	
 	
 	//vai retirar a peça da posiçao de origem e remover a possivel peça que esta na posiçao de destino
 	//e depois coloca a peça a peça onde foi capturada. (Se tiver uma peça la, caso nao so coloca mesmo.)
